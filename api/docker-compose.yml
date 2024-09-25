@@ -4,8 +4,16 @@ services:
   webapi:
     image: ${DOCKER_REGISTRY-}webapi
     build:
-      context: WebApi
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/WebApi/obj/
+      - /app/WebApi/bin
+    ports:
+      - 8080:80
+      - 8081:443
+    command: ["dotnet", "watch", "run", "--project", "/app/WebApi/WebApi.csproj"]
 
   db:
     container_name: dev-db
@@ -13,7 +21,6 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      # - PGDATA=/var/lib/postgresql/data
     volumes:
       - /var/lib/postgresql/data
     ports:
