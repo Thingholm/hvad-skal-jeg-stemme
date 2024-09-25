@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using WebApi.Data;
 
 namespace WebApi
 {
@@ -13,6 +15,13 @@ namespace WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
+            builder.Services.AddDbContext<AppDbContext>(options => 
+                options
+                    .UseNpgsql(connectionString)
+                    .UseSnakeCaseNamingConvention()
+            );
 
             var app = builder.Build();
 
