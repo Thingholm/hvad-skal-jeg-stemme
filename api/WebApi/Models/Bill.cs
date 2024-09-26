@@ -10,7 +10,7 @@ namespace WebApi.Models
         public string BillTag { get; set; } = null!;
         [StringLength(100)]
         public string Title { get; set; } = null!;
-        [StringLength(100)]
+        [StringLength(1000)]
         public string Question { get; set; } = null!;
         [StringLength(2500)]
         public string? Description { get; set; }
@@ -18,7 +18,7 @@ namespace WebApi.Models
         public string? ForExplanation { get; set; }
         [StringLength(2500)]
         public string? AgainstExplanation { get; set; }
-        [StringLength(200)]
+        [StringLength(2500)]
         public string Link { get; set; } = null!;
 
         public List<Vote> Votes { get; } = [];
