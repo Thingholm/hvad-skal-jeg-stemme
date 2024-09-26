@@ -13,5 +13,10 @@ namespace WebApi.Data
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Party> Parties { get; set; }
         public DbSet<Vote> Votes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace WebApi.Models
         public int Id { get; set; }
         public Bill Bill { get; set; } = null!;
         public Party Party { get; set; } = null!;
+        public string VoteType { get; set; } = null!;
     }
 }
