@@ -6,14 +6,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_URLS=https://0.0.0.0:443;http://0.0.0.0:80
     volumes:
       - .:/app
       - /app/WebApi/obj/
       - /app/WebApi/bin
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     ports:
       - 8080:80
       - 8081:443
-    command: ["dotnet", "watch", "run", "--project", "/app/WebApi/WebApi.csproj"]
+    command: ["dotnet", "watch", "run", "--project", "/app/WebApi/WebApi.csproj", "--urls", "https://0.0.0.0:443;http://0.0.0.0:80"]
 
   db:
     container_name: dev-db

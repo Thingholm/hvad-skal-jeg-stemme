@@ -4,6 +4,8 @@ WORKDIR /app
 COPY WebApi/WebApi.csproj .
 RUN dotnet restore
 
+RUN dotnet dev-certs https --clean && \
+    dotnet dev-certs https --trust
     
 RUN dotnet tool install --global dotnet-ef --version 8.* 
 ENV PATH="$PATH:/root/.dotnet/tools"
