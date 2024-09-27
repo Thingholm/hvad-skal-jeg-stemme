@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
+using WebApi.Dto;
 using WebApi.Models;
 
 namespace WebApi.Controllers;
@@ -19,13 +20,15 @@ public class PartyController : ControllerBase
     }
 
     [HttpGet(Name = "GetAllParties")]
-    public async Task<ActionResult<List<Party>>> Get()
+    public async Task<ActionResult<List<PartyDto>>> Get()
     {
-        List<Party>? parties = await _db.Parties
+        List<Party> parties = await _db.Parties
             .Include(e => e.Votes)
-            .ThenInclude(e => e.Bill)
+                .ThenInclude(e => e.Bill)
             .ToListAsync();
+
+        List<PartyDto> partyDto = parties.Select(party => party.ToPartyDto()).ToList();
         
-        return Ok(parties);
+        return Ok(partyDto);
     }
 }

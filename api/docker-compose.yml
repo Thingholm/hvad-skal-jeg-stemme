@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   webapi:
     image: ${DOCKER_REGISTRY-}webapi
@@ -20,6 +18,8 @@ services:
     ports:
       - 8080:80
       - 8081:443
+    stdin_open: true
+    tty: true
     command: ["dotnet", "watch", "run", "--project", "/app/WebApi/WebApi.csproj", "--urls", "https://0.0.0.0:443;http://0.0.0.0:80"]
 
   db:

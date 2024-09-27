@@ -21,6 +21,6 @@ namespace WebApi.Models
         [StringLength(1000)]
         public string Link { get; set; } = null!;
 
-        public List<Vote> Votes { get; } = [];
+        public ICollection<Vote> Votes { get; } = new List<Vote>();
     }
 }
