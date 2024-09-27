@@ -12,6 +12,6 @@ namespace WebApi.Models
         [StringLength(7)]
         public string ColorHex { get; set; } = null!;
 
-        public List<Vote> Votes { get; } = [];
+        public ICollection<Vote> Votes { get; } = new List<Vote>();
     }
 }
