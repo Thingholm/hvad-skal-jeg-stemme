@@ -20,7 +20,7 @@ public class BillController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<BillDto>> Get(bool includeVotes)
+    public async Task<ActionResult<List<BillDto>>> Get(bool includeVotes)
     {
         List<Bill> bills = includeVotes 
             ? await _db.Bills
@@ -35,7 +35,7 @@ public class BillController : ControllerBase
         return Ok(billDto);
     }
 
-     [HttpGet("{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<BillDto>> Get(int id, bool includeVotes)
     {
         Bill? bill = includeVotes
