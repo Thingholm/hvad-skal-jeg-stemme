@@ -21,7 +21,7 @@ public static class PartyDtoExtensions
             party.Name,
             party.Letter,
             party.ColorHex,
-            party.Votes.Select(vote => vote.ToPartyVoteDto()).ToList()
+            party.Votes.Select(vote => vote.ToPartyVoteDto()).ToList()        
         );
     }
 }

@@ -19,16 +19,38 @@ public class PartyController : ControllerBase
         _db = db;
     }
 
-    [HttpGet(Name = "GetAllParties")]
-    public async Task<ActionResult<List<PartyDto>>> Get()
+    [HttpGet]
+    public async Task<ActionResult<List<PartyDto>>> Get(bool includeVotes)
     {
-        List<Party> parties = await _db.Parties
-            .Include(e => e.Votes)
-                .ThenInclude(e => e.Bill)
-            .ToListAsync();
+        List<Party> parties = includeVotes 
+            ? await _db.Parties
+                .Include(e => e.Votes)
+                    .ThenInclude(e => e.Bill)
+                .ToListAsync()
+            : await _db.Parties
+                .ToListAsync();
 
         List<PartyDto> partyDto = parties.Select(party => party.ToPartyDto()).ToList();
-        
+
+        return Ok(partyDto);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<PartyDto>> Get(int id, bool includeVotes)
+    {
+        Party? party = includeVotes
+            ? await _db.Parties
+                .Include(e => e.Votes)
+                    .ThenInclude(e => e.Bill)
+                .FirstOrDefaultAsync(e => e.Id == id)
+            : await _db.Parties
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+        if (party == null)
+            return NotFound();
+
+        PartyDto partyDto = party.ToPartyDto();
+
         return Ok(partyDto);
     }
 }
