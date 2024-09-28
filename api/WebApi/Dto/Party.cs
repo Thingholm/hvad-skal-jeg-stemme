@@ -13,7 +13,7 @@ public record PartyDto
 
 public static class PartyDtoExtensions 
 {
-    public static PartyDto ToPartyDto(this Party party)
+    public static PartyDto ToPartyDto(this Party party, bool includeVotes)
     {
         return new PartyDto
         (
@@ -21,7 +21,7 @@ public static class PartyDtoExtensions
             party.Name,
             party.Letter,
             party.ColorHex,
-            party.Votes.Select(vote => vote.ToPartyVoteDto()).ToList()        
+            includeVotes ? party.Votes.Select(vote => vote.ToPartyVoteDto()).ToList() : new List<PartyVoteDto>()
         );
     }
 }

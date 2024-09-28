@@ -7,7 +7,7 @@ using WebApi.Models;
 namespace WebApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PartyController : ControllerBase
 {
     private readonly ILogger<PartyController> _logger;
@@ -30,7 +30,7 @@ public class PartyController : ControllerBase
             : await _db.Parties
                 .ToListAsync();
 
-        List<PartyDto> partyDto = parties.Select(party => party.ToPartyDto()).ToList();
+        List<PartyDto> partyDto = parties.Select(party => party.ToPartyDto(includeVotes)).ToList();
 
         return Ok(partyDto);
     }
@@ -49,7 +49,7 @@ public class PartyController : ControllerBase
         if (party == null)
             return NotFound();
 
-        PartyDto partyDto = party.ToPartyDto();
+        PartyDto partyDto = party.ToPartyDto(includeVotes);
 
         return Ok(partyDto);
     }

@@ -11,12 +11,13 @@ public record BillDto
     string? Description,
     string? ForExplanation,
     string? AgainstExplanation,
-    string Link
+    string Link,
+    List<BillVoteDto> Votes
 );
 
 public static class BillDtoExtensions
 {
-    public static BillDto ToBillDto(this Bill bill)
+    public static BillDto ToBillDto(this Bill bill, bool includeVotes)
     {
         return new BillDto
         (
@@ -27,7 +28,8 @@ public static class BillDtoExtensions
             bill.Description,
             bill.ForExplanation,
             bill.AgainstExplanation,
-            bill.Link
+            bill.Link,
+            includeVotes ? bill.Votes.Select(vote => vote.ToBillVoteDto()).ToList() : new List<BillVoteDto>()
         );
     }
 }
