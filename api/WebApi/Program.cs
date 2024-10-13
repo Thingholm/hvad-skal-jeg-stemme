@@ -10,6 +10,16 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowFrontend", policy =>
+            {
+                policy.WithOrigins("http://localhost:3000") 
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
+
         // Add services to the container.
 
         builder.Services.AddControllers()
@@ -29,6 +39,8 @@ public class Program
         );
 
         var app = builder.Build();
+
+        app.UseCors("AllowFrontend");
 
         using (IServiceScope scope = app.Services.CreateScope())
         {
