@@ -1,34 +1,36 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { useQuestions } from "../../data/queryHooks/useQuestions";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, animate } from "framer-motion";
 import Radio from "./Radio";
 import Button from "../../components/Button";
 import ExpandQuestion from "./ExpandQuestion";
 import { div } from "framer-motion/client";
+import getResults from "../../data/getResults";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 export type Answer = 0 | 1 | 2 | "skip" | null;
 
 const variants = {
     enter: (direction: number) => {
-      return {
-        x: direction > 0 ? 500 : -500,
-        opacity: 0,
-      };
+        return {
+            x: direction > 0 ? 500 : -500,
+            opacity: 0,
+        };
     },
     center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1
+        zIndex: 1,
+        x: 0,
+        opacity: 1
     },
     exit: (direction: number) => {
-      return {
-        zIndex: 0,
-        x: direction < 0 ? 500 : -500,
-        opacity: 0
-      };
+        return {
+            zIndex: 0,
+            x: direction < 0 ? 500 : -500,
+            opacity: 0
+        };
     }
-  };
+};
 
 export default function Test(){
     const [searchParams, setSearchParams] = useSearchParams();
@@ -70,6 +72,10 @@ export default function Test(){
         setSelectedRadio(parseInt(e.target.value) as Answer);
     }
 
+    const handleFinish = () => {
+        questionsQuery.isSuccess && getResults(answers, questionsQuery.data);
+    }
+
     const handleNext = () => {
         if (selectedRadio == null) {
             // First set to false, so bounce always init
@@ -83,7 +89,10 @@ export default function Test(){
             return state;
         })
 
-        if (questionIndex == questionsQuery.data?.length) return;
+        if (questionIndex == questionsQuery.data?.length) {
+            handleFinish();
+            return;
+        };
 
         setDirection(1);
         const newQuestionIndex = questionIndex + 1;
@@ -151,7 +160,18 @@ export default function Test(){
                         <Button type="primary" onClick={handleNext}>{questionIndex == questionsQuery.data.length ? "Til resultat" : "Næste spørgsmål"}</Button>
                     </div>
                     <p className="my-4">
-                        {alert && <span className="text-red-700 bg-red-100 px-4 py-1.5 rounded-md">Besvar eller spring spørgsmålet over for at gå videre til næste</span>}
+                        {alert && 
+                            <motion.div 
+                                animate={{ translateX: [0, 20, 0] }}
+                                transition={{ duration: 0.2}}
+                                className="flex justify-center"
+                            >
+                                <motion.p className="text-red-700 bg-red-100 px-4 py-1.5 rounded-md flex items-center w-fit">
+                                    <IoAlertCircleOutline className="mr-2" size={20}/>
+                                    <span>Besvar eller spring spørgsmålet over for at gå videre til næste</span>
+                                </motion.p>
+                            </motion.div>
+                        }
                     </p>
                 </motion.div>
             </AnimatePresence>
