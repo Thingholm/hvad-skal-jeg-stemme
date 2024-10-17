@@ -1,16 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Vote } from "./useVotes";
+import { Question } from "./useQuestions";
+import { Party } from "./useParties";
 
-export interface Question{
+export interface Vote{
     id: number
-    billTag: string
-    title: string
-    question: string
-    description: string
-    forExplanation: string
-    againstExplanation: string
-    link: string
-    votes: Vote[]
+    bill?: Question
+    party?: Party
+    voteType: string
 }
 
 export function useQuestions(){
@@ -19,7 +15,7 @@ export function useQuestions(){
     const query = useQuery({
         queryKey: ["questions"],
         queryFn: async (): Promise<Array<Question>> => {
-            const response = await fetch("https://localhost:8081/api/Bill?includeVotes=true");
+            const response = await fetch("https://localhost:8081/api/Bill?includeVotes=false");
             return await response.json();
         }
     })

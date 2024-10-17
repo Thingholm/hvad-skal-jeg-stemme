@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { useQuestions } from "../../data/queryHooks/useQuestions";
-import { motion, AnimatePresence, animate } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Radio from "./Radio";
 import Button from "../../components/Button";
 import ExpandQuestion from "./ExpandQuestion";
-import { div } from "framer-motion/client";
 import getResults from "../../data/getResults";
 import { IoAlertCircleOutline } from "react-icons/io5";
 
-export type Answer = 0 | 1 | 2 | "skip" | null;
+export type Answer = "against" | "neither" | "for" | "skip" | null;
+export type QuestionAnswer = {
+    billId: number
+    answer: Answer
+}
 
 const variants = {
     enter: (direction: number) => {
@@ -36,7 +39,7 @@ export default function Test(){
     const [searchParams, setSearchParams] = useSearchParams();
     const [selectedRadio, setSelectedRadio] = useState<Answer>(null);
     const [alert, setAlert] = useState<boolean>(false);
-    const [answers, setAnswers] = useState<Answer[]>([]);
+    const [answers, setAnswers] = useState<QuestionAnswer[]>([]);
     const [direction, setDirection] = useState(0);
 
     const questionsQuery = useQuestions();
@@ -59,9 +62,9 @@ export default function Test(){
 
         const answer = answers[questionIndex - 1];
 
-        if (answer == 0 || answer == 1 || answer == 2) {
-            setSelectedRadio(answer)
-        } else if (answer == "skip"){
+        if (answer.answer == "against" || answer.answer == "neither" || answer.answer == "for") {
+            setSelectedRadio(answer.answer)
+        } else if (answer.answer == "skip"){
             setSelectedRadio(null);
         }
 
@@ -69,7 +72,7 @@ export default function Test(){
     }
 
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedRadio(parseInt(e.target.value) as Answer);
+        setSelectedRadio(e.target.value as Answer);
     }
 
     const handleFinish = () => {
@@ -77,6 +80,8 @@ export default function Test(){
     }
 
     const handleNext = () => {
+        if (!questionsQuery.isSuccess) return;
+
         if (selectedRadio == null) {
             // First set to false, so bounce always init
             setAlert(false);
@@ -85,7 +90,7 @@ export default function Test(){
         }
 
         setAnswers(state => {
-            state.splice(questionIndex - 1, 1, selectedRadio)
+            state.splice(questionIndex - 1, 1, {billId: questionsQuery.data[questionIndex - 1].id, answer: selectedRadio})
             return state;
         })
 
@@ -112,8 +117,10 @@ export default function Test(){
     }
 
     const handleSkip = () => {
+        if (!questionsQuery.isSuccess) return;
+
         setAnswers(state => {
-            state.splice(questionIndex - 1, 1, "skip")
+            state.splice(questionIndex - 1, 1, {billId: questionsQuery.data[questionIndex - 1].id, answer: "skip"})
             return state;
         })
 
@@ -149,9 +156,9 @@ export default function Test(){
                     <ExpandQuestion question={questionsQuery.data[questionIndex - 1]} key={questionIndex}/>
                     <div className="flex justify-center">
                         <div className="flex items-center">
-                            <Radio id="against" value={0} label="Imod" selected={selectedRadio} onChange={handleRadioChange}/>
-                            <Radio id="neither" value={1} label="Hverken eller" selected={selectedRadio} onChange={handleRadioChange}/>
-                            <Radio id="for" value={2} label="For" selected={selectedRadio} onChange={handleRadioChange}/>
+                            <Radio id="against" value="against" label="Imod" selected={selectedRadio} onChange={handleRadioChange}/>
+                            <Radio id="neither" value="neither" label="Hverken eller" selected={selectedRadio} onChange={handleRadioChange}/>
+                            <Radio id="for" value="for" label="For" selected={selectedRadio} onChange={handleRadioChange}/>
                         </div>
                     </div>
                     <Button type="text" onClick={handleSkip} className="my-4">Spring spørgsmål over</Button>
