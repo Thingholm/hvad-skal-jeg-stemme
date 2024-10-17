@@ -1,7 +1,6 @@
 import { Answer, QuestionAnswer } from "../pages/Test/Test";
 import { Party } from "./queryHooks/useParties";
 import { Question } from "./queryHooks/useQuestions";
-import { Vote } from "./queryHooks/useVotes";
 
 interface Result {
     party: Party | undefined
