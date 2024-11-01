@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { useQuestions } from "../../data/queryHooks/useQuestions";
 import { motion, AnimatePresence } from "framer-motion";
 import Radio from "./Radio";
@@ -37,6 +37,8 @@ const variants = {
 
 export default function Test(){
     const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+
     const [selectedRadio, setSelectedRadio] = useState<Answer>(null);
     const [alert, setAlert] = useState<boolean>(false);
     const [answers, setAnswers] = useState<QuestionAnswer[]>([]);
@@ -46,51 +48,50 @@ export default function Test(){
 
     const questionIndexParam = searchParams.get("spm") ?? "0";
     const questionIndex = parseInt(questionIndexParam);
+
+    const currentQuestion = questionsQuery.data?.[questionIndex - 1];
     
     useEffect(() => {
-        if (questionIndex == 0){
+        if (questionIndex === 0){
             setSearchParams("spm=1")
         }
-    }, [])
+    }, [questionIndex, setSearchParams])
+
+    // #region Handlers
 
     const checkIfAnswered = (questionIndex: number) => {
-        if (answers.length < questionIndex){
+        if (!answers[questionIndex - 1]) {
             setSelectedRadio(null);
             setAlert(false);
             return;
         }
-
         const answer = answers[questionIndex - 1];
-
-        if (answer.answer == "against" || answer.answer == "neither" || answer.answer == "for") {
-            setSelectedRadio(answer.answer)
-        } else if (answer.answer == "skip"){
-            setSelectedRadio(null);
-        }
-
+        setSelectedRadio(answer.answer === "skip" ? null : answer.answer);
         setAlert(false);
-    }
-
+    };
+    
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedRadio(e.target.value as Answer);
     }
 
     const handleFinish = () => {
-        questionsQuery.isSuccess && getResults(answers, questionsQuery.data);
+        if (!questionsQuery.isSuccess) return;
+
+        localStorage.setItem("results", JSON.stringify(getResults(answers, questionsQuery.data)));
+
+        navigate("/resultat");
     }
 
     const handleNext = () => {
         if (!questionsQuery.isSuccess) return;
 
         if (selectedRadio == null) {
-            // First set to false, so bounce always init
-            setAlert(false);
             setAlert(true);
             return;
         }
 
         setAnswers(state => {
-            state.splice(questionIndex - 1, 1, {billId: questionsQuery.data[questionIndex - 1].id, answer: selectedRadio})
+            state.splice(questionIndex - 1, 1, {billId: currentQuestion?.id ?? 0, answer: selectedRadio})
             return state;
         })
 
@@ -120,12 +121,15 @@ export default function Test(){
         if (!questionsQuery.isSuccess) return;
 
         setAnswers(state => {
-            state.splice(questionIndex - 1, 1, {billId: questionsQuery.data[questionIndex - 1].id, answer: "skip"})
+            state.splice(questionIndex - 1, 1, {billId: currentQuestion?.id ?? 0, answer: "skip"})
             return state;
         })
 
-        if (questionIndex == questionsQuery.data?.length) return;
-
+        if (questionIndex == questionsQuery.data?.length) {
+            handleFinish();
+            return;
+        };
+        
         setDirection(1);
         const newQuestionIndex = questionIndex + 1;
         setSearchParams("spm=" + newQuestionIndex);
@@ -133,7 +137,9 @@ export default function Test(){
         checkIfAnswered(newQuestionIndex);
     }
 
-    if (!questionsQuery.isSuccess){
+    // #endregion
+
+    if (!questionsQuery.isSuccess || !currentQuestion){
         return(
             <div>Loader</div>
         )
@@ -152,8 +158,8 @@ export default function Test(){
                     className="absolute top-0 w-full shadow-xl bg-white py-8 rounded-lg flex-col justify-center items-center text-center"
                 >
                     <p className="mb-3">{questionIndex} / {questionsQuery.data.length}</p>
-                    <h1 className="text-xl font-bold">{questionsQuery.data[questionIndex - 1].question}</h1>
-                    <ExpandQuestion question={questionsQuery.data[questionIndex - 1]} key={questionIndex}/>
+                    <h1 className="text-xl font-bold">{currentQuestion.question}</h1>
+                    <ExpandQuestion question={currentQuestion} key={questionIndex}/>
                     <div className="flex justify-center">
                         <div className="flex items-center">
                             <Radio id="against" value="against" label="Imod" selected={selectedRadio} onChange={handleRadioChange}/>

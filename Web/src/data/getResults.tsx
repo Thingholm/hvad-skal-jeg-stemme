@@ -2,7 +2,7 @@ import { Answer, QuestionAnswer } from "../pages/Test/Test";
 import { Party } from "./queryHooks/useParties";
 import { Question } from "./queryHooks/useQuestions";
 
-interface Result {
+export interface Result {
     party: Party | undefined
     points: number
     agreementRate: number

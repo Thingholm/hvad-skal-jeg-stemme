@@ -8,7 +8,7 @@ export default function Header(){
             <h1 className="text-2xl font-bold"><a href="/">Hvad skal jeg stemme?</a></h1>
             <nav className="w-1/3 flex justify-between items-center">
                 <Link to={"/"}>Om testen</Link>
-                <Link to={"/"}>Mit resultat</Link>
+                <Link to={"/resultat"}>Mit resultat</Link>
                 <Button type="primary" onClick={() => navigate("/test")}>Tag testen her</Button>
             </nav>
         </header>
