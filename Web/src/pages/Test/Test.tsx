@@ -78,6 +78,7 @@ export default function Test(){
         if (!questionsQuery.isSuccess) return;
 
         localStorage.setItem("results", JSON.stringify(getResults(answers, questionsQuery.data)));
+        localStorage.setItem("userAnswers", JSON.stringify(answers));
 
         navigate("/resultat");
     }
