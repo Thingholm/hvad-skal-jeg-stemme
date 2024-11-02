@@ -8,12 +8,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import TestPage from './pages/Test/Page.tsx'
 import ResultPage from './pages/Result/Page.tsx'
+import VotesPage from './pages/Votes/Page.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<RootLayout/>}>
         <Route index element={<App/>}/>
+        <Route path="partiernes-stemmer" element={<VotesPage/>}/>
         <Route path="test" element={<TestPage/>}/>
         <Route path="resultat" element={<ResultPage/>}/>
       </Route>

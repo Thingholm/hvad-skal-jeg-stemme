@@ -1,4 +1,5 @@
 import { Result } from "../../data/getResults";
+import PartyRow from "./PartyRow";
 
 export default function ResultPage(){
     const results: Result[] = JSON.parse(localStorage.getItem("results") ?? "null");
@@ -17,28 +18,7 @@ export default function ResultPage(){
             <h1 className="font-bold text-xl mb-4">Resultat</h1>
             {results.sort((a, b) => b.points - a.points).map(result => {
                 return (
-                    <div className="w-11/12 my-2">
-                        <h4 
-                            style={{ color: result.party?.colorHex}}
-                            className="mb-1 font-medium"
-                        >
-                            {result.party?.letter} - {result.party?.name}
-                        </h4>
-                        <div 
-                            style={{ 
-                                width: result.agreementRate + "%", 
-                                backgroundColor: result.party?.colorHex
-                            }}
-                            className="relative h-6 rounded-md"
-                        >
-                            <span 
-                                style={{ color: result.party?.colorHex}}
-                                className={"absolute left-full font-medium " + (result.agreementRate == 0 ? "" : "pl-2")}
-                            >
-                                {Math.round(result.agreementRate * 10) / 10}%
-                            </span>
-                        </div>
-                    </div>
+                   <PartyRow result={result}/>
                 )
             })}
         </div>
