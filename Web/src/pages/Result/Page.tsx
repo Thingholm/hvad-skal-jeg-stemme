@@ -16,9 +16,9 @@ export default function ResultPage(){
     return (
         <div className="flex-col justify-center items-center my-4 mx-16 py-8 px-16 shadow-xl bg-white  rounded-lg">
             <h1 className="font-bold text-xl mb-4">Resultat</h1>
-            {results.sort((a, b) => b.points - a.points).map(result => {
+            {results.sort((a, b) => b.points - a.points).map((result, index) => {
                 return (
-                   <PartyRow result={result}/>
+                   <PartyRow key={"resultRow" + index} result={result}/>
                 )
             })}
         </div>

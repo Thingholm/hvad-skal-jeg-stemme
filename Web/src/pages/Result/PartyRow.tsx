@@ -1,17 +1,26 @@
+import { useState } from "react"
 import { Result } from "../../data/getResults"
-import { useParty } from "../../data/queryHooks/useParties"
+import { Question } from "../../data/queryHooks/useQuestions"
 import { useVotesByParty } from "../../data/queryHooks/useVotes"
+import Vote from "../Votes/Vote"
 
 interface Props {
     result: Result
 }
 
 export default function PartyRow({ result }: Props){
+    const [isOpen, setIsOpen] = useState(false);
+
     const partyVotesQuery = useVotesByParty(result.party?.id)
+
+    const convertedPartyVote = partyVotesQuery.isSuccess && partyVotesQuery.data?.map(v => ({ 
+        ...v.bill,
+        votes: [{ id: v.id, party: v.party, voteType: v.voteType }]
+    }) as Question);
 
     return(
         <div className="w-full my-2">
-            <div className="w-11/12">
+            <div className="w-11/12 hover:cursor-pointer" onClick={() => setIsOpen(state => state ? false : true)}>
                 <h4 
                     style={{ color: result.party?.colorHex}}
                     className="mb-1 font-medium"
@@ -34,39 +43,11 @@ export default function PartyRow({ result }: Props){
                 </div>
             </div>
 
-            <div>
-                {partyVotesQuery.isSuccess &&
-                    partyVotesQuery.data.map(vote => {
+            <div className={" " + (isOpen ? "block" : "hidden")}>
+                {convertedPartyVote &&
+                    convertedPartyVote.map(vote => {
                         return (
-                            <div>
-                                <h4 className="font-medium mb-1">{vote.bill?.question}</h4>
-                                <div className="flex text-center">
-                                    <div className="w-1/3">
-                                        <p>Imod</p>
-                                        <div className="flex justify-center">
-                                            {vote.voteType == "against" && 
-                                                <div className="flex justify-center items-center w-10 h-10 rounded-full" style={{backgroundColor: vote.party?.colorHex}}>{vote.party?.letter}</div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="w-1/3">
-                                        <p>Hverken eller</p>
-                                        <div className="flex justify-center">
-                                            {vote.voteType == "neither" && 
-                                                <div className="flex justify-center items-center w-10 h-10 rounded-full" style={{backgroundColor: vote.party?.colorHex}}>{vote.party?.letter}</div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="w-1/3">
-                                        <p>For</p>
-                                        <div className="flex justify-center">
-                                            {vote.voteType == "for" && 
-                                                <div className="flex justify-center items-center w-10 h-10 rounded-full" style={{backgroundColor: vote.party?.colorHex}}>{vote.party?.letter}</div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <Vote vote={vote}/>
                         )
                     })
                 }
