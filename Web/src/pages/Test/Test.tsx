@@ -54,6 +54,10 @@ export default function Test(){
     
     useEffect(() => {
         if (questionIndex === 0){
+            if (answers.length > 0) {
+                setSearchParams("spm=" + (answers.length + 1));
+                return;
+            }
             setSearchParams("spm=1")
         }
     }, [questionIndex, setSearchParams])
