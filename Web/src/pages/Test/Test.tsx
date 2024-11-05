@@ -7,6 +7,7 @@ import Button from "../../components/Button";
 import ExpandQuestion from "./ExpandQuestion";
 import getResults from "../../data/getResults";
 import { IoAlertCircleOutline } from "react-icons/io5";
+import { useSessionStorage } from "../../hooks/useSessionStorage";
 
 export type Answer = "against" | "neither" | "for" | "skip" | null;
 export type QuestionAnswer = {
@@ -41,9 +42,9 @@ export default function Test(){
 
     const [selectedRadio, setSelectedRadio] = useState<Answer>(null);
     const [alert, setAlert] = useState<boolean>(false);
-    const [answers, setAnswers] = useState<QuestionAnswer[]>([]);
+    const [getAnswers, setAnswers, removeAnswers] = useSessionStorage<QuestionAnswer[]>("answers")
+    const answers: QuestionAnswer[] = getAnswers() ?? [];
     const [direction, setDirection] = useState(0);
-
     const questionsQuery = useQuestions();
 
     const questionIndexParam = searchParams.get("spm") ?? "0";
@@ -80,6 +81,8 @@ export default function Test(){
         localStorage.setItem("results", JSON.stringify(getResults(answers, questionsQuery.data)));
         localStorage.setItem("userAnswers", JSON.stringify(answers));
 
+        removeAnswers();
+
         navigate("/resultat");
     }
 
@@ -91,10 +94,8 @@ export default function Test(){
             return;
         }
 
-        setAnswers(state => {
-            state.splice(questionIndex - 1, 1, {billId: currentQuestion?.id ?? 0, answer: selectedRadio})
-            return state;
-        })
+        answers.splice(questionIndex - 1, 1, {billId: currentQuestion?.id ?? 0, answer: selectedRadio});
+        setAnswers(answers)
 
         if (questionIndex == questionsQuery.data?.length) {
             handleFinish();
@@ -121,10 +122,8 @@ export default function Test(){
     const handleSkip = () => {
         if (!questionsQuery.isSuccess) return;
 
-        setAnswers(state => {
-            state.splice(questionIndex - 1, 1, {billId: currentQuestion?.id ?? 0, answer: "skip"})
-            return state;
-        })
+        answers.splice(questionIndex - 1, 1, {billId: currentQuestion?.id ?? 0, answer: "skip"})
+        setAnswers(answers)
 
         if (questionIndex == questionsQuery.data?.length) {
             handleFinish();
