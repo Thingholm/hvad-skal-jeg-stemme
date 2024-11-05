@@ -15,7 +15,8 @@ export function useSessionStorage<T>(key: string): UseSessionStorage<T> {
 
     const getSessionStorageItem = (): T | undefined => {
         try {
-            const item = window.sessionStorage.getItem(key) ?? "";
+            const item = window.sessionStorage.getItem(key);
+            if (item === null) return undefined;
             return JSON.parse(item);
         } catch (error) {
             console.log(error);
