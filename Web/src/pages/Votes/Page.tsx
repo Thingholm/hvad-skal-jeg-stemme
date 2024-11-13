@@ -12,7 +12,7 @@ export default function VotesPage(){
 
     return(
         <div className="my-4 mx-16">
-            <h1 className="font-bold text-xl mb-4">Sådan har partierne stemt</h1>
+            <h1 className="font-bold text-2xl font mb-4 text-blue-900">Sådan har partierne stemt</h1>
             {questionsQuery.data.map(vote => {
                 return (
                     <Vote vote={vote}/>

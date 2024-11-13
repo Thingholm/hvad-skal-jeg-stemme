@@ -162,7 +162,7 @@ export default function Test(){
                     className="absolute top-0 w-full shadow-xl bg-white py-8 rounded-lg flex-col justify-center items-center text-center"
                 >
                     <p className="mb-3">{questionIndex} / {questionsQuery.data.length}</p>
-                    <h1 className="text-xl font-bold">{currentQuestion.question}</h1>
+                    <h1 className="text-xl font-bold text-red-700">{currentQuestion.question}</h1>
                     <ExpandQuestion question={currentQuestion} key={questionIndex}/>
                     <div className="flex justify-center">
                         <div className="flex items-center">

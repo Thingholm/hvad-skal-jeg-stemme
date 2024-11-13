@@ -5,6 +5,7 @@ export default function RootLayout(){
     return(
         <div className="min-h-screen overflow-x-hidden">
             <Header/>
+            <div className="h-16"></div>
             <Outlet/>
         </div>
     )
