@@ -1,6 +1,5 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import RootLayout from './layout/Root.tsx'
@@ -9,12 +8,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import TestPage from './pages/Test/Page.tsx'
 import ResultPage from './pages/Result/Page.tsx'
 import VotesPage from './pages/Votes/Page.tsx'
+import LandingPage from './pages/Landing/Page.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<RootLayout/>}>
-        <Route index element={<App/>}/>
+        <Route index element={<LandingPage/>}/>
         <Route path="partiernes-stemmer" element={<VotesPage/>}/>
         <Route path="test" element={<TestPage/>}/>
         <Route path="resultat" element={<ResultPage/>}/>
