@@ -30,6 +30,7 @@ const variants = {
     exit: (direction: number) => {
         return {
             zIndex: 0,
+            position: "absolute",
             x: direction < 0 ? 500 : -500,
             opacity: 0
         };
@@ -159,7 +160,7 @@ export default function Test(){
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="absolute top-0 w-full shadow-xl bg-white py-8 rounded-lg flex-col justify-center items-center text-center"
+                    className="relative top-0 w-full shadow-xl bg-white py-8 rounded-lg flex-col justify-center items-center text-center"
                 >
                     <p className="mb-3">{questionIndex} / {questionsQuery.data.length}</p>
                     <h1 className="text-xl font-bold text-red-700">{currentQuestion.question}</h1>
