@@ -9,9 +9,9 @@ interface Props {
 }
 
 export default function PartiesContainer({ vote, voteType, showUserVotes }: Props) {
-    const userAnswers = JSON.parse(localStorage.getItem("userAnswers") ?? "undefined");
+    const userAnswers = JSON.parse(localStorage.getItem("userAnswers") ?? "null");
 
-    const userAnswer = userAnswers.find((answer: QuestionAnswer) => answer.billId == vote.id).answer ?? undefined;
+    const userAnswer = userAnswers?.find((answer: QuestionAnswer) => answer.billId == vote.id).answer ?? undefined;
 
     return (
         <div className="flex flex-wrap mt-2 mb-4">
@@ -23,7 +23,7 @@ export default function PartiesContainer({ vote, voteType, showUserVotes }: Prop
                 )
             })}
 
-            {userAnswer && userAnswer == voteType && showUserVotes &&
+            {userAnswer && userAnswer == voteType && (showUserVotes == undefined || showUserVotes) &&
                 <div 
                         className="flex justify-center items-center w-10 h-10 rounded-full mx-1 my-1 font-medium bg-blue-500 text-white" 
                 >
