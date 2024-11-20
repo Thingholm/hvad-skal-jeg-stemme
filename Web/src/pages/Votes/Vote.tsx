@@ -4,9 +4,10 @@ import PartyLetter from "./PartyLetter";
 
 interface Props {
     vote: Question
+    showUserVotes?: boolean
 }
 
-export default function Vote({ vote }: Props){
+export default function Vote({ vote, showUserVotes }: Props){
     return(
         <div className="mt-8 mb-12">
             <p className="mb-1">Spørgsmål {vote.id}</p>
@@ -14,15 +15,15 @@ export default function Vote({ vote }: Props){
             <div className="flex justify-between">
                 <div className="bg-gray-50 w-1/3 px-4 pt-2 rounded-lg">
                     <p className="font-medium">Imod</p>
-                    <PartiesContainer vote={vote} voteType="against"/>
+                    <PartiesContainer vote={vote} voteType="against" showUserVotes={showUserVotes}/>
                 </div>
                 <div className="bg-gray-50 w-1/3 mx-4  px-4 pt-2 rounded-lg">
                     <p className="font-medium">Hverken eller</p>
-                    <PartiesContainer vote={vote} voteType="neither"/>
+                    <PartiesContainer vote={vote} voteType="neither" showUserVotes={showUserVotes}/>
                 </div>
                 <div className="bg-gray-50 w-1/3 px-4 pt-2 rounded-lg">
                     <p className="font-medium">For</p>
-                    <PartiesContainer vote={vote} voteType="for"/>
+                    <PartiesContainer vote={vote} voteType="for" showUserVotes={showUserVotes}/>
                 </div>
             </div>
         </div>
