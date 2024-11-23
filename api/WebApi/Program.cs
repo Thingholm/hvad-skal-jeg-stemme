@@ -10,6 +10,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Configuration
+            .AddUserSecrets<Program>(optional: true)
+            .AddEnvironmentVariables();
+
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowFrontend", policy =>
@@ -31,7 +35,8 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
+
+        var connectionString = builder.Configuration.GetConnectionString("db") ?? Environment.GetEnvironmentVariable("CONNECTION_STRING");
         builder.Services.AddDbContext<AppDbContext>(options => 
             options
                 .UseNpgsql(connectionString)
