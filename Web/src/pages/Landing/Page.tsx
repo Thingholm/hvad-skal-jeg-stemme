@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
-import ChristiansborgPng from "../../assets/christiansborg.png"
+import ChristiansborgPng from "../../assets/christiansborg-small.png"
 
 export default function LandingPage(){
     const navigate = useNavigate();
