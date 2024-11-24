@@ -169,7 +169,7 @@ export default function Test(){
                 <motion.div 
                     key={questionIndex}
                     custom={direction}
-                    variants={variants}
+                    variants={variants as any}
                     initial="enter"
                     animate="center"
                     exit="exit"

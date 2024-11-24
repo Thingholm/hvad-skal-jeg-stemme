@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Vote } from "./useVotes";
 import { url } from "../api"
 
@@ -16,8 +16,6 @@ export interface Question{
 }
 
 export function useQuestions(){
-    const queryClient = useQueryClient();
-
     const query = useQuery({
         queryKey: ["questions"],
         queryFn: async (): Promise<Array<Question>> => {

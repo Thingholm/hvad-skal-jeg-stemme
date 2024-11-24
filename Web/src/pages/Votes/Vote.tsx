@@ -1,6 +1,5 @@
 import { Question } from "../../data/queryHooks/useQuestions"
 import PartiesContainer from "./PartiesContainer";
-import PartyLetter from "./PartyLetter";
 
 interface Props {
     vote: Question

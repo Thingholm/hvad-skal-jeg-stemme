@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Question } from "./useQuestions";
 import { Party } from "./useParties";
 import { url } from "../api"
@@ -12,8 +12,6 @@ export interface Vote{
 }
 
 export function useQuestions(includeVotes?: boolean){
-    const queryClient = useQueryClient();
-
     const query = useQuery({
         queryKey: ["questions"],
         queryFn: async (): Promise<Question[]> => {
@@ -26,8 +24,6 @@ export function useQuestions(includeVotes?: boolean){
 };
 
 export function useVotesByParty(id: number | undefined) {
-    const queryClient = useQueryClient();
-
     const query = useQuery({
         queryKey: ["votesByParty", id],
         queryFn: async (): Promise<Vote[]> => {

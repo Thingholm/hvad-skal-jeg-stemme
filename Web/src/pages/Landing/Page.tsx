@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
-import ChristiansborgPng from "../../assets/christiansborg-small.png"
 import About from "../About/About";
 
 export default function LandingPage(){
