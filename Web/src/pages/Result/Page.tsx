@@ -8,12 +8,12 @@ export default function ResultPage(){
     const navigate = useNavigate();
 
     const results: Result[] = JSON.parse(localStorage.getItem("results") ?? "null");
-
     if (results == null) {
         return(
-            <div className="flex justify-center items-center relative my-4 mx-16">
-                <h1>Resultat</h1>
-                <p>Intet resultat</p>
+            <div className="relative flex-col justify-center items-center my-4 mx-16 py-8 px-12 shadow-xl bg-white  rounded-lg">
+                <h1 className="font-bold text-2xl mb-4 px-4 text-blue-900">Dit resultat</h1>
+                <p className="mb-4 px-4">Der er intet resultat at vise. Tag testen for at se dit resultat.</p>
+                <Button type="primary" className="mx-4" onClick={() => navigate("/test")}>Tag testen</Button>
             </div>
         )
     }
