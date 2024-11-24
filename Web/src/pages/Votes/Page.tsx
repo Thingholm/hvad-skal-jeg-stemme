@@ -12,7 +12,20 @@ export default function VotesPage(){
     console.log(questionsQuery.data)
 
     if (!questionsQuery.isSuccess) return (
-        <div>Loader</div>
+        <div className="relative my-4 mx-16">
+            <h1 className="font-bold text-2xl font mb-4 text-blue-900">Sådan har partierne stemt</h1>
+            <div className="animate-puls">
+                {[...Array(5)].map(() => {
+                    return(
+                        <>
+                            <div className="w-48 h-6 bg-gray-200 rounded-lg mb-4"></div>
+                            <div className="w-1/2 h-10 bg-gray-200 rounded-lg mb-4"></div>
+                            <div className="w-full h-32 bg-gray-200 rounded-lg mb-10"></div>
+                        </>
+                    )
+                })}
+            </div>
+        </div>
     )
 
     return(

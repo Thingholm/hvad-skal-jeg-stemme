@@ -19,6 +19,17 @@ export default function PartyRow({ result }: Props){
         votes: [{ id: v.id, party: v.party, voteType: v.voteType }]
     }) as Question);
 
+    if (!partyVotesQuery.isSuccess){
+        return(
+            <div className="w-full">
+                <div className="group w-full px-4 py-2 rounded-lg animate-pulse" >
+                    <div className="w-1/4 h-8 bg-gray-200 rounded-lg mb-3"></div>
+                    <div className="w-full h-8 bg-gray-200 rounded-lg mb-4"></div>
+                </div>
+            </div>
+        )
+    }
+
     return(
         <div className="w-full">
             <div 

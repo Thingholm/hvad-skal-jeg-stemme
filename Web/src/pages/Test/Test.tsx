@@ -146,7 +146,20 @@ export default function Test(){
 
     if (!questionsQuery.isSuccess || !currentQuestion){
         return(
-            <div>Loader</div>
+            <div className="flex justify-center items-center relative my-4 mx-16">
+                <div className="relative top-0 w-full shadow-xl bg-white py-8 rounded-lg flex flex-col justify-center items-center text-center animate-pulse">
+                    <div className="rounded-lg bg-gray-200 h-6 w-1/12 mb-3"></div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-2/3 mb-4"></div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-1/6 mb-4"></div>
+                    <div className="flex w-full justify-center mb-4">
+                        <div className="rounded-lg bg-gray-200 h-40 w-1/6 mx-4"></div>
+                        <div className="rounded-lg bg-gray-200 h-40 w-1/6 mx-4"></div>
+                        <div className="rounded-lg bg-gray-200 h-40 w-1/6 mx-4"></div>
+                    </div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-1/6 mb-4"></div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-1/5 mb-4"></div>
+                </div>
+            </div>
         )
     }
 
