@@ -11,8 +11,8 @@ interface Props {
 
 export default function Radio({ id, value, label, selected, onChange }: Props){
     return(
-        <div className="flex-col mx-8 w-40 h-32">
-            <div className="relative">
+        <div className="flex-col sm:mx-8 w-full sm:w-28 md:w-32 lg:w-40 sm:h-32">
+            <div className="relative h-0 sm:h-auto">
                 <input 
                     type="radio" 
                     name="answer" 
@@ -24,9 +24,9 @@ export default function Radio({ id, value, label, selected, onChange }: Props){
                 />
             </div>
             <label htmlFor={id} className="flex flex-col justify-center items-center hover:bg-gray-100 py-4 rounded-lg">
-                {value == "against" && <PiSmileySad size={selected == value ? 58 : 48} className={"duration-200 " + (selected == value ? "fill-blue-500" : "fill-gray-500")}/>}
-                {value == "neither" && <PiSmileyMeh size={selected == value ? 58 : 48} className={"duration-200 " + (selected == value ? "fill-blue-500" : "fill-gray-500")}/>}
-                {value == "for" && <PiSmiley size={selected == value ? 58 : 48} className={"duration-200 " + (selected == value ? "fill-blue-500" : "fill-gray-500")}/>}           
+                {value == "against" && <PiSmileySad size={selected == value ? 58 : 48} className={"sm:h-auto sm:w-auto duration-200 " + (selected == value ? "fill-blue-500 w-12 h-12" : "fill-gray-500 w-10 h-10")}/>}
+                {value == "neither" && <PiSmileyMeh size={selected == value ? 58 : 48} className={"sm:h-auto sm:w-auto duration-200 " + (selected == value ? "fill-blue-500 w-12 h-12" : "fill-gray-500 w-10 h-10")}/>}
+                {value == "for" && <PiSmiley size={selected == value ? 58 : 48} className={"sm:h-auto sm:w-auto duration-200 " + (selected == value ? "fill-blue-500 w-12 h-12" : "fill-gray-500 w-10 h-10")}/>}           
                 <span className={"block " + (selected == value ? "text-blue-500 font-medium" : "text-gray-500")}>{label}</span>
             </label>
         </div>

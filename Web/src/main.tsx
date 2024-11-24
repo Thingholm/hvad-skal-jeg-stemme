@@ -9,12 +9,14 @@ import TestPage from './pages/Test/Page.tsx'
 import ResultPage from './pages/Result/Page.tsx'
 import VotesPage from './pages/Votes/Page.tsx'
 import LandingPage from './pages/Landing/Page.tsx'
+import AboutPage from './pages/About/Page.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<RootLayout/>}>
         <Route index element={<LandingPage/>}/>
+        <Route path="om-testen" element={<AboutPage/>}/>
         <Route path="partiernes-stemmer" element={<VotesPage/>}/>
         <Route path="test" element={<TestPage/>}/>
         <Route path="resultat" element={<ResultPage/>}/>

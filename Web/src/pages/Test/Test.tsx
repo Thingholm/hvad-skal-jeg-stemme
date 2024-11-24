@@ -146,25 +146,25 @@ export default function Test(){
 
     if (!questionsQuery.isSuccess || !currentQuestion){
         return(
-            <div className="flex justify-center items-center relative my-4 mx-16">
+            <div className="flex justify-center items-center relative my-4 mx-4 sm:mx-16">
                 <div className="relative top-0 w-full shadow-xl bg-white py-8 rounded-lg flex flex-col justify-center items-center text-center animate-pulse">
-                    <div className="rounded-lg bg-gray-200 h-6 w-1/12 mb-3"></div>
-                    <div className="rounded-lg bg-gray-200 h-10 w-2/3 mb-4"></div>
-                    <div className="rounded-lg bg-gray-200 h-10 w-1/6 mb-4"></div>
-                    <div className="flex w-full justify-center mb-4">
-                        <div className="rounded-lg bg-gray-200 h-40 w-1/6 mx-4"></div>
-                        <div className="rounded-lg bg-gray-200 h-40 w-1/6 mx-4"></div>
-                        <div className="rounded-lg bg-gray-200 h-40 w-1/6 mx-4"></div>
+                    <div className="rounded-lg bg-gray-200 h-6 w-1/6 md:w-1/12 mb-3"></div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-4/5 sm:w-2/3 mb-4"></div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-1/3 md:w-1/6 mb-4"></div>
+                    <div className="flex flex-col sm:flex-row w-full justify-center mb-4 px-4 sm:px-0">
+                        <div className="rounded-lg bg-gray-200 h-16 sm:h-40 w-full sm:w-1/6 sm:mx-4"></div>
+                        <div className="rounded-lg bg-gray-200 h-16 sm:h-40 w-full my-4 sm:my-0 sm:w-1/6 sm:mx-4"></div>
+                        <div className="rounded-lg bg-gray-200 h-16 sm:h-40 w-full sm:w-1/6 sm:mx-4"></div>
                     </div>
-                    <div className="rounded-lg bg-gray-200 h-10 w-1/6 mb-4"></div>
-                    <div className="rounded-lg bg-gray-200 h-10 w-1/5 mb-4"></div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-1/2 md:w-1/6 mb-4"></div>
+                    <div className="rounded-lg bg-gray-200 h-10 w-1/3 md:w-1/5 mb-4"></div>
                 </div>
             </div>
         )
     }
 
     return(
-        <div className="flex justify-center items-center relative my-4 mx-16">
+        <div className="flex justify-center items-center relative my-4 mx-4 sm:mx-16">
             <AnimatePresence initial={false} custom={direction}>
                 <motion.div 
                     key={questionIndex}
@@ -173,13 +173,13 @@ export default function Test(){
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="relative top-0 w-full shadow-xl bg-white py-8 rounded-lg flex-col justify-center items-center text-center"
+                    className="relative top-0 w-full shadow-xl bg-white py-4 sm:py-8 rounded-lg flex-col justify-center items-center text-center"
                 >
                     <p className="mb-3">{questionIndex} / {questionsQuery.data.length}</p>
-                    <h1 className="font-bold px-16 text-2xl font mb-4 text-red-700">{currentQuestion.question}</h1>
+                    <h1 className="font-bold px-4 sm:px-16 sm:text-xl md:text-2xl font mb-4 text-red-700">{currentQuestion.question}</h1>
                     <ExpandQuestion question={currentQuestion} key={questionIndex}/>
-                    <div className="flex justify-center">
-                        <div className="flex items-center">
+                    <div className="flex justify-center mx-4">
+                        <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto">
                             <Radio id="against" value="against" label="Imod" selected={selectedRadio} onChange={handleRadioChange}/>
                             <Radio id="neither" value="neither" label="Hverken eller" selected={selectedRadio} onChange={handleRadioChange}/>
                             <Radio id="for" value="for" label="For" selected={selectedRadio} onChange={handleRadioChange}/>
@@ -190,7 +190,7 @@ export default function Test(){
                         {questionIndex > 1 && <Button type="text" onClick={handlePrev} className="mr-4">Tilbage</Button>}
                         <Button type="primary" onClick={handleNext}>{questionIndex == questionsQuery.data.length ? "Til resultat" : "Næste spørgsmål"}</Button>
                     </div>
-                    <p className="my-4">
+                    <p className="my-4 mx-4">
                         {alert && 
                             <motion.div 
                                 animate={{ translateX: [0, 20, 0] }}

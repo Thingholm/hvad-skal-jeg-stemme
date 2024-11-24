@@ -22,8 +22,8 @@ export default function PartyRow({ result }: Props){
     if (!partyVotesQuery.isSuccess){
         return(
             <div className="w-full">
-                <div className="group w-full px-4 py-2 rounded-lg animate-pulse" >
-                    <div className="w-1/4 h-8 bg-gray-200 rounded-lg mb-3"></div>
+                <div className="group w-full px-2 sm:px-4 py-2 rounded-lg animate-pulse" >
+                    <div className="w-1/2 sm:w-1/4 h-8 bg-gray-200 rounded-lg mb-3"></div>
                     <div className="w-full h-8 bg-gray-200 rounded-lg mb-4"></div>
                 </div>
             </div>
@@ -33,10 +33,10 @@ export default function PartyRow({ result }: Props){
     return(
         <div className="w-full">
             <div 
-                className="group w-full px-4 py-2 flex items-center justify-between rounded-lg duration-150 hover:cursor-pointer hover:bg-gray-200" 
+                className="group w-full px-2 sm:px-4 py-2 flex items-center justify-between rounded-lg duration-150 hover:cursor-pointer hover:bg-gray-200" 
                 onClick={() => setIsOpen(state => state ? false : true)}
             >
-                <div className="w-11/12">
+                <div className="w-10/12 lg:w-11/12">
                     <h4 
                         style={{ color: result.party?.colorHex}}
                         className="mb-1 font-medium"
@@ -58,10 +58,10 @@ export default function PartyRow({ result }: Props){
                         </span>
                     </div>
                 </div>
-                <IoChevronDown size={20} className={"inline duration-200 opacity-0 group-hover:opacity-100 " + (isOpen && "rotate-180")}/>
+                <IoChevronDown size={20} className={"hidden sm:inline duration-200 opacity-0 group-hover:opacity-100 " + (isOpen && "rotate-180")}/>
             </div>
 
-            <div className={"px-4 " + (isOpen ? "block" : "hidden")}>
+            <div className={"px-2 sm:px-4 " + (isOpen ? "block" : "hidden")}>
                 {convertedPartyVote &&
                     convertedPartyVote.map(vote => {
                         return (

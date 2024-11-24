@@ -13,7 +13,7 @@ export default function Button({ children, type, className, onClick }: Props){
     }
 
     return(
-        <button className={"duration-150 py-2 px-4 rounded-lg " + btnType[type] + " " + className} onClick={onClick}>
+        <button className={"duration-150 px-3 py-1.5 sm:py-2 sm:px-4 rounded-lg " + btnType[type] + " " + className} onClick={onClick}>
             {children}
         </button>
     )

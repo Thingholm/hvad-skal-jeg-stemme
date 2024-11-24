@@ -12,7 +12,7 @@ export default function VotesPage(){
     console.log(questionsQuery.data)
 
     if (!questionsQuery.isSuccess) return (
-        <div className="relative my-4 mx-16">
+        <div className="relative my-4 mx-4 sm:mx-16">
             <h1 className="font-bold text-2xl font mb-4 text-blue-900">Sådan har partierne stemt</h1>
             <div className="animate-puls">
                 {[...Array(5)].map(() => {
@@ -29,10 +29,10 @@ export default function VotesPage(){
     )
 
     return(
-        <div className="relative my-4 mx-16">
-            <h1 className="font-bold text-2xl font mb-4 text-blue-900">Sådan har partierne stemt</h1>
+        <div className="relative my-4 mx-4 sm:mx-16">
+            <h1 className="font-bold text-2xl font mb-6 sm:mb-4 text-blue-900">Sådan har partierne stemt</h1>
             {userAnswers &&
-                <label htmlFor="show-user-votes" className="absolute flex top-0 right-0 px-4 py-2 bg-gray-100 rounded-lg hover:cursor-pointer">
+                <label htmlFor="show-user-votes" className=" sm:absolute sm:flex top-0 sm:right-0 px-4 py-2 bg-gray-100 rounded-lg hover:cursor-pointer">
                     <input 
                         type="checkbox" 
                         name="show-user-votes" 
@@ -44,11 +44,13 @@ export default function VotesPage(){
                     <span className="select-none">Vis mine svar</span>
                 </label>
             }
-            {questionsQuery.data.map(vote => {
-                return (
-                    <Vote vote={vote} showUserVotes={showUserVotes}/>
-                )
-            })}
+            <div className="mt-4 md:mt-0">
+                {questionsQuery.data.map(vote => {
+                    return (
+                        <Vote vote={vote} showUserVotes={showUserVotes}/>
+                    )
+                })}
+            </div>
         </div>
     )
 }

@@ -14,7 +14,7 @@ export default function PartiesContainer({ vote, voteType, showUserVotes }: Prop
     const userAnswer = userAnswers?.find((answer: QuestionAnswer) => answer.billId == vote.id).answer ?? undefined;
 
     return (
-        <div className="flex flex-wrap mt-2 mb-4">
+        <div className="flex flex-wrap mt-2 pb-4">
             {vote.votes.map(partyVote => {
                 if (partyVote.voteType != voteType || !partyVote.party) return;
 
