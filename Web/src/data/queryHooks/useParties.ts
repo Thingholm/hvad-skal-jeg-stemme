@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Vote } from "./useVotes"
+import { url } from "../api"
 
 export interface Party {
     id: number
@@ -15,7 +16,7 @@ export function useParty(id: number | undefined, includeVotes: boolean){
     const query = useQuery({
         queryKey: ["party", id, includeVotes],
         queryFn: async (): Promise<Array<Party>> => {
-            const response = await fetch(`https://localhost:8081/api/Party/${id}?includeVotes=${includeVotes}`);
+            const response = await fetch(`${url}/Party/${id}?includeVotes=${includeVotes}`);
             return await response.json();
         },
         enabled: !!id

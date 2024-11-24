@@ -1,6 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Question } from "./useQuestions";
 import { Party } from "./useParties";
+import { url } from "../api"
+
 
 export interface Vote{
     id: number
@@ -15,7 +17,7 @@ export function useQuestions(includeVotes?: boolean){
     const query = useQuery({
         queryKey: ["questions"],
         queryFn: async (): Promise<Question[]> => {
-            const response = await fetch(`https://localhost:8081/api/Bill?includeVotes=${includeVotes == undefined ? false : includeVotes}`);
+            const response = await fetch(`${url}/Bill?includeVotes=${includeVotes == undefined ? false : includeVotes}`);
             return await response.json();
         }
     })
@@ -29,7 +31,7 @@ export function useVotesByParty(id: number | undefined) {
     const query = useQuery({
         queryKey: ["votesByParty", id],
         queryFn: async (): Promise<Vote[]> => {
-            const response = await fetch(`https://localhost:8081/api/Vote/ByParty/${id}`);
+            const response = await fetch(`${url}/Vote/ByParty/${id}`);
             return await response.json();
         },
         enabled: !!id

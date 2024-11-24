@@ -1,5 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Vote } from "./useVotes";
+import { url } from "../api"
+
 
 export interface Question{
     id: number
@@ -19,7 +21,7 @@ export function useQuestions(){
     const query = useQuery({
         queryKey: ["questions"],
         queryFn: async (): Promise<Array<Question>> => {
-            const response = await fetch("https://localhost:8081/api/Bill?includeVotes=true");
+            const response = await fetch(`${url}/Bill?includeVotes=true`);
             return await response.json();
         }
     })
