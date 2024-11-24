@@ -21,6 +21,10 @@ public class Program
                 policy.WithOrigins("http://localhost:3000") 
                     .AllowAnyHeader()
                     .AllowAnyMethod();
+
+                policy.WithOrigins("https://hvad-skal-jeg-stemme.vercel.app") 
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
             });
         });
 
