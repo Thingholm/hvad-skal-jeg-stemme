@@ -18,15 +18,12 @@ public class Program
         {
             options.AddPolicy("AllowFrontend", policy =>
             {
-                policy.WithOrigins("http://localhost:3000") 
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-
-                policy.WithOrigins("https://hvad-skal-jeg-stemme.vercel.app") 
+                policy.WithOrigins("http://localhost:3000", "https://hvad-skal-jeg-stemme.vercel.app") // Tilføj begge origins her
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
         });
+
 
         // Add services to the container.
 
