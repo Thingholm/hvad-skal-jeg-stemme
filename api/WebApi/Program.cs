@@ -48,20 +48,6 @@ public class Program
 
         app.UseCors("AllowFrontend");
 
-        using (IServiceScope scope = app.Services.CreateScope())
-        {
-            try
-            {
-                AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                DbSeeder.SeedData(dbContext);
-            }
-            catch (Exception ex)
-            {
-                ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "Error seeding database");
-            }
-        }
-
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
