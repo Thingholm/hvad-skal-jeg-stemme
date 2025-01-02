@@ -1,1 +1,1 @@
-export const url = "https://hvadskaljegstemmewebapi.purplesky-33158442.swedencentral.azurecontainerapps.io/api";
+export const url = "https://hvadskaljegstemmewebapi.happybeach-1e6b18d5.northeurope.azurecontainerapps.io/api";
