@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Question } from "./useQuestions";
 import { Party } from "./useParties";
-import { url } from "../api"
 
+const url = import.meta.env.VITE_API_URL;
 
 export interface Vote{
     id: number
@@ -12,6 +12,7 @@ export interface Vote{
 }
 
 export function useQuestions(includeVotes?: boolean){
+    console.log(url);
     const query = useQuery({
         queryKey: ["questions"],
         queryFn: async (): Promise<Question[]> => {

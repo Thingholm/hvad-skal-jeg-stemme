@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Vote } from "./useVotes";
-import { url } from "../api"
 
+const url = import.meta.env.VITE_API_URL;
 
 export interface Question{
     id: number
