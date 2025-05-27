@@ -36,3 +36,4 @@ export function useVotesByParty(id: number | undefined) {
 
     return query;
 }
+

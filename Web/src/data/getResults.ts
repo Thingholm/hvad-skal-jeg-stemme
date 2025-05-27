@@ -42,3 +42,4 @@ function compareAnswers(userAnswer: Answer, partyAnswer: Answer){
 
     return 0;
 };
+
