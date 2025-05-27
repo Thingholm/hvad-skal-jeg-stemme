@@ -18,10 +18,10 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: cd src/WebApi && dotnet restore
+      run: cd WebApi && dotnet restore
 
     - name: Build
-      run: dotnet build src/WebApi/WebApi.csproj --no-restore
+      run: dotnet build WebApi/WebApi.csproj --no-restore
 
     - name: Test
-      run: dotnet test src/WebApi/WebApi.csproj --no-build --verbosity normal
+      run: dotnet test WebApi/WebApi.csproj --no-build --verbosity normal
